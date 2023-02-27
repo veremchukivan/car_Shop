@@ -1,0 +1,57 @@
+﻿@model DataAccess.Entities.Product;
+
+
+<style>
+details summary {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  transition: color .3s;  /* плавная смена цвета */
+  cursor: pointer;  /* изменение курсора при наведении */
+}
+details summary:hover,
+details[open] summary {
+  color: FireBrick;
+}
+</style>
+
+<div class="card text-center">
+    <h2 class="card-header">Car Detail Information</h2>
+    <div class="card-body">
+        <div class="product-image">
+            <img src="@(Model.ImagePath ?? "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png")" class="card-img-top" alt="Product Image">
+        </div>
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">
+            @Model.Year
+            @if(@Model.Category !=null)
+            {
+                @Model.Category.Name     
+            }
+           
+            <span class="badge bg-primary">@Model.Price$</span>
+            
+        </p>
+        
+        <details>
+            <summary>Specifications</summary>
+                  <textarea asp-for="InfoCar" class="form-control" id="exampleFormControlTextarea1" rows="38"></textarea>
+        </details>
+         <details>
+            <summary>Repair History</summary>
+                  <textarea asp-for="RepairHistory" class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+        </details>
+
+      
+     
+        @if(ViewBag.ReturnUrl == null)
+        {
+            <a asp-action="Index" class="btn btn-dark">Back</a>
+        }
+        else
+        {
+            <a href="@ViewBag.ReturnUrl" class="btn btn-dark">Back</a>
+        }
+    
+     </div>
+</div>

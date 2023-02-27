@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DataAccess.Entities.Product> 
+
+<h1>Car List</h1>
+
+<a asp-action="Create" class="btn btn-primary my-2">Create New Product</a>
+
+@* Razor Engine Operators: @if @for... @switch @{ code } *@
+
+@if (Model.Any())
+{
+    <p>Count of products: @Model.Count()</p>
+}
+else
+{
+    <p>No products here yet!</p>
+}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var p in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="product-card-image">
+                    <img src="@(p.ImagePath ?? "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png")" class="card-img-top" alt="Product Image">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@p.Name</h5>
+                    <p class="card-text">
+                        @p.Year
+                        <br>
+                        @if (p.Category != null) 
+                        { 
+                            @p.Category.Name
+                        }
+                        <span class="badge bg-primary">@p.Price$</span>
+                    </p>
+                    <a asp-action="Details" asp-route-id="@p.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-dark">Show Details</a>
+                    <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-warning">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

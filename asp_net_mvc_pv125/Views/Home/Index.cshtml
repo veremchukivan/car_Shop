@@ -1,0 +1,28 @@
+﻿@using BusinessLogic
+@model IEnumerable<DataAccess.Entities.Product> 
+
+@inject ICartService CartService
+
+<div class="container-fluid">
+   <form class="d-flex">
+      <input class="form-control me-2 w-25" type="text" placeholder="Search"  name="SearchString" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+   </form>
+</div>
+
+<div class="dropdown">
+  <button class="dropbtn">Filter</button>
+  <div class="dropdown-content">
+    <a>@Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm })</a>
+    <a>@Html.ActionLink("Year", "Index", new { sortOrder = ViewBag.YearSortParm })</a>
+  </div>
+</div>
+
+
+ 
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var p in Model)
+    {
+        <partial name="_ProductCardPartial" model="@p" />
+    }
+</div>

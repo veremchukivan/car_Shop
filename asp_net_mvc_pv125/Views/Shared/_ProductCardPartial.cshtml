@@ -1,0 +1,48 @@
+﻿@using BusinessLogic
+
+@model DataAccess.Entities.Product
+@inject ICartService CartService
+
+<div class="col">
+    <a class="card-link-block" asp-controller="Products"
+       asp-action="Details"
+       asp-route-id="@Model.Id"
+       asp-route-returnUrl="@Context.Request.Path">
+        <div class="card h-100">
+           <div class="product-image">
+            <img src="@(Model.ImagePath ?? "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png")" class="card-img-top" alt="Product Image">
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">
+                    @Model.Year 
+                    <br>
+                   @if (@Model.Category != null) 
+                        { 
+                            @Model.Category.Name
+                        }
+                    <span class="badge bg-primary">@Model.Price$</span>
+                </p>
+
+                
+
+
+                @if (CartService.IsInCart(Model.Id))
+                {
+                    <a asp-controller="Cart" asp-action="Remove" asp-route-productId="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-danger mt-2">
+                        <i class="bi bi-bag-plus"></i> 
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Cart" asp-action="Add" asp-route-productId="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-success mt-2">
+                        <i class="bi bi-bag-plus"></i>
+                    </a>
+                }
+               
+
+
+            </div>
+        </div>
+    </a>
+</div>
